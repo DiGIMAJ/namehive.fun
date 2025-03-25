@@ -153,8 +153,8 @@ const PodcastNameGenerator = () => {
     <div className="min-h-screen bg-gradient-to-b from-white to-purple-50">
       <Helmet>
         <title>AI Podcast Name Generator | Create Unique Show Names</title>
-        <meta name="description" content="Generate creative and engaging podcast names with our AI-powered tool. Get instant suggestions with growth strategies and platform recommendations." />
-        <meta name="keywords" content="podcast name generator, podcast naming tool, podcast ideas, show name generator, AI podcast names" />
+        <meta name="description" content="Generate creative, catchy, and memorable podcast names instantly with our free AI-powered podcast name generator. Get unique name suggestions for any niche with growth strategies." />
+        <meta name="keywords" content="podcast name generator, podcast name ideas, podcast title generator, AI podcast name generator, catchy podcast names, podcast name maker, true crime podcast names, business podcast names, gaming podcast names, sports podcast names, free podcast name generator" />
         <meta property="og:title" content="AI Podcast Name Generator | Create Unique Show Names" />
         <meta property="og:description" content="Generate creative and engaging podcast names with our AI-powered tool. Get instant suggestions with growth strategies." />
         <meta property="og:type" content="website" />
@@ -183,6 +183,79 @@ const PodcastNameGenerator = () => {
               <p className="text-xl text-purple-700 mb-8">
                 Generate engaging, catchy podcast names that will help your show stand out
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Benefits Section */}
+        <section className="py-16 bg-white/50">
+          <div className="page-container">
+            <div className="max-w-4xl mx-auto space-y-12">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold text-purple-800 mb-4">Why Choose Our AI Podcast Name Generator?</h2>
+                <p className="text-lg text-purple-600">Get creative, catchy, and memorable podcast names in seconds</p>
+              </div>
+
+              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <Card className="bg-white/70 transform hover:scale-105 transition-transform">
+                  <CardHeader>
+                    <div className="size-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4">
+                      <Sparkles className="size-6" />
+                    </div>
+                    <CardTitle>AI-Powered Creativity</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p>Generate unique and creative podcast names instantly using advanced AI technology.</p>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-white/70 transform hover:scale-105 transition-transform">
+                  <CardHeader>
+                    <div className="size-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4">
+                      <Radio className="size-6" />
+                    </div>
+                    <CardTitle>Perfect for Any Niche</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p>From true crime to business, gaming to sports - get tailored names for your specific podcast category.</p>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-white/70 transform hover:scale-105 transition-transform">
+                  <CardHeader>
+                    <div className="size-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4">
+                      <Headphones className="size-6" />
+                    </div>
+                    <CardTitle>SEO Optimized</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p>Get discoverable names that help your podcast stand out and rank better in search results.</p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div className="mt-16 bg-gradient-to-r from-purple-100/50 to-purple-50/50 rounded-xl p-8">
+                <h3 className="text-2xl font-bold text-purple-800 mb-6">Popular Podcast Categories</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {[
+                    "True Crime & Mystery",
+                    "Business & Entrepreneurship",
+                    "Gaming & Esports",
+                    "Sports & Recreation",
+                    "Movies & Entertainment",
+                    "Books & Literature",
+                    "Mental Health & Wellness",
+                    "Comedy & Humor"
+                  ].map((category, index) => (
+                    <Badge 
+                      key={index} 
+                      className="bg-white/70 text-purple-700 hover:bg-purple-100 cursor-pointer py-2"
+                    >
+                      {category}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
