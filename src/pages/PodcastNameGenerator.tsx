@@ -519,6 +519,27 @@ const PodcastNameGenerator = () => {
           </div>
         </section>
       </main>
+      
+      {/* SEO Keywords Section */}
+      <section className="sr-only" aria-hidden="true">
+        <h2>Popular Podcast Name Generator Search Terms</h2>
+        <ul>
+          <li>podcast name generator</li>
+          <li>generate a podcast name</li>
+          <li>podcast name ideas</li>
+          <li>podcast title generator</li>
+          <li>podcast name generator free</li>
+          <li>name generator for podcast</li>
+          <li>podcast name generator ai</li>
+          <li>ai podcast name generator</li>
+          <li>podcast name ideas generator</li>
+          <li>podcast generator name</li>
+          <li>random podcast name generator</li>
+          <li>podcast episode title generator</li>
+          <li>funny podcast name ideas</li>
+        </ul>
+      </section>
+      
       <Footer />
     </div>
   );
