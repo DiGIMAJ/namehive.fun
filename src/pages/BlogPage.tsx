@@ -176,3 +176,26 @@ const BlogPage = () => {
 };
 
 export default BlogPage;
+import { Footer } from "@/components/layout/Footer";
+import { Navbar } from "@/components/layout/Navbar";
+
+export default function BlogPage() {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+      <main className="container mx-auto px-4 py-16">
+        <div className="max-w-3xl mx-auto">
+          <h1 className="text-4xl font-bold text-gray-900 mb-8">Blog</h1>
+          <div className="prose prose-purple max-w-none">
+            <p className="text-gray-600 mb-8">Stay updated with our latest articles about naming, branding, and industry insights.</p>
+            {/* Blog posts will be dynamically loaded here */}
+            <div className="text-center text-gray-500 mt-8">
+              Coming soon! Subscribe to our newsletter to get notified.
+            </div>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+}

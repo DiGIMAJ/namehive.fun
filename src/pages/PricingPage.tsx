@@ -205,3 +205,65 @@ const PricingPage = () => {
 };
 
 export default PricingPage;
+import { Footer } from "@/components/layout/Footer";
+import { Navbar } from "@/components/layout/Navbar";
+
+export default function PricingPage() {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+      <main className="container mx-auto px-4 py-16">
+        <div className="max-w-3xl mx-auto text-center">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Simple, Transparent Pricing</h1>
+          <p className="text-xl text-gray-600 mb-8">Choose the plan that works best for you</p>
+          
+          <div className="grid md:grid-cols-2 gap-8 mt-12">
+            <div className="bg-white p-8 rounded-lg shadow-lg border border-purple-100">
+              <h3 className="text-2xl font-semibold text-gray-900 mb-4">Free</h3>
+              <div className="text-4xl font-bold text-purple-600 mb-6">$0</div>
+              <ul className="text-left space-y-4 mb-8">
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Basic name generation
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  5 generations per day
+                </li>
+              </ul>
+              <button className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition-colors">
+                Get Started
+              </button>
+            </div>
+            
+            <div className="bg-white p-8 rounded-lg shadow-lg border-2 border-purple-500">
+              <div className="inline-block px-4 py-1 bg-purple-100 text-purple-600 rounded-full text-sm font-semibold mb-4">
+                RECOMMENDED
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-4">Pro</h3>
+              <div className="text-4xl font-bold text-purple-600 mb-6">$9.99</div>
+              <ul className="text-left space-y-4 mb-8">
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Advanced AI generations
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Unlimited generations
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Premium support
+                </li>
+              </ul>
+              <button className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition-colors">
+                Upgrade to Pro
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+}
