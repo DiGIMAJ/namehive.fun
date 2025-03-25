@@ -60,14 +60,38 @@ const Footer = () => {
           </div>
 
           <div className="space-y-4">
-            <h3 className="font-medium text-lg">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><Link to="/blog" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm block py-1">Blog</Link></li>
-              <li><Link to="/pricing" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm block py-1">Pricing</Link></li>
-              <li><Link to="/privacy" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm block py-1">Privacy Policy</Link></li>
-              <li><Link to="/terms" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm block py-1">Terms of Service</Link></li>
-              <li><Link to="/refund" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm block py-1">Refund Policy</Link></li>
-              <li><a href="mailto:info@namehive.fun" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm block py-1">Contact</a></li>
+            <h3 className="font-semibold text-lg text-white/90 mb-6">Quick Links</h3>
+            <ul className="space-y-3">
+              <li>
+                <Link to="/blog" className="text-gray-300 hover:text-purple-400 transition-all-300 text-sm block py-1.5 hover:translate-x-1">
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link to="/pricing" className="text-gray-300 hover:text-purple-400 transition-all-300 text-sm block py-1.5 hover:translate-x-1">
+                  Pricing
+                </Link>
+              </li>
+              <li>
+                <Link to="/privacy" className="text-gray-300 hover:text-purple-400 transition-all-300 text-sm block py-1.5 hover:translate-x-1">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms" className="text-gray-300 hover:text-purple-400 transition-all-300 text-sm block py-1.5 hover:translate-x-1">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link to="/refund" className="text-gray-300 hover:text-purple-400 transition-all-300 text-sm block py-1.5 hover:translate-x-1">
+                  Refund Policy
+                </Link>
+              </li>
+              <li>
+                <a href="mailto:info@namehive.fun" className="text-gray-300 hover:text-purple-400 transition-all-300 text-sm block py-1.5 hover:translate-x-1">
+                  Contact
+                </a>
+              </li>
             </ul>
           </div>
         </div>
