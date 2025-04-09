@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Copy, RefreshCw, Info, Heart, Dog, Cat } from 'lucide-react';
+import { Copy, RefreshCw, Info, Heart, Dog } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Helmet } from 'react-helmet';
 import { 
@@ -33,22 +33,22 @@ interface GeneratedName {
   name_origin: string;
 }
 
-const PetNameGenerator = () => {
+const DogNameGenerator = () => {
   const { toast } = useToast();
   const { user } = useAuth();
   const [description, setDescription] = useState<string>('');
-  const [petType, setPetType] = useState<string>('');
   const [tone, setTone] = useState<string>('fun');
   const [numberOfNames, setNumberOfNames] = useState<string>('7');
   const [generatedNames, setGeneratedNames] = useState<GeneratedName[]>([]);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
 
+  // SEO Schema
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "AI Pet Name Generator",
-    "description": "Generate unique and creative pet names with our AI-powered tool.",
+    "name": "AI Dog Name Generator",
+    "description": "Generate unique and creative dog names with our AI-powered tool.",
     "applicationCategory": "Utility",
     "offers": {
       "@type": "Offer",
@@ -56,11 +56,43 @@ const PetNameGenerator = () => {
     }
   };
 
+  // FAQ Schema for SEO
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I choose the perfect name for my dog?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Consider your dog's personality, appearance, and breed. Choose a name that's easy to pronounce, distinct from commands, and one you'll be comfortable calling at the dog park."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are popular dog naming trends in 2023?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Popular trends include nature-inspired names, human names, pop culture references, and names that reflect your dog's heritage or breed origin."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should dog names be one or two syllables?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "While one or two syllable names are easier for dogs to recognize, any length name can work well if it's distinct from common commands."
+        }
+      }
+    ]
+  };
+
   const generateNames = useCallback(async () => {
-    if (!petType.trim() || !description.trim()) {
+    if (!description.trim()) {
       toast({
         title: "Missing Information",
-        description: "Please provide both pet type and description",
+        description: "Please provide a description of your dog",
         variant: "destructive"
       });
       return;
@@ -69,23 +101,23 @@ const PetNameGenerator = () => {
     setIsGenerating(true);
 
     try {
-      const systemPrompt = `You are an AI specializing in generating creative and adorable pet names based on user input. You will receive a user prompt describing the desired pet name generation task. Your task is to generate a list of names based on the prompt.
+      const systemPrompt = `You are an AI specializing in generating creative and adorable dog names based on user input. You will receive a user prompt describing the desired dog name generation task. Your task is to generate a list of names based on the prompt.
 You MUST respond with a valid JSON structure containing an array of name objects:
 {
   "names": [
     {
-      "name": "Fluffy",
-      "meaning": "Soft and puffy appearance",
-      "personality_traits": ["Playful", "Gentle", "Friendly"],
-      "why_it_fits": "The name reflects the pet's appearance and gentle nature",
-      "name_origin": "English, descriptive name based on physical characteristics"
+      "name": "Max",
+      "meaning": "Greatest or maximum",
+      "personality_traits": ["Loyal", "Energetic", "Friendly"],
+      "why_it_fits": "The name reflects the dog's boundless energy and loyal nature",
+      "name_origin": "Latin, short form of Maximilian meaning 'greatest'"
     }
   ]
 }`;
 
-      const userPrompt = `Generate ${numberOfNames || 5} unique, creative, and adorable pet name ideas for a ${petType}. The names should be:
+      const userPrompt = `Generate ${numberOfNames || 5} unique, creative, and adorable dog name ideas. The names should be:
 - Cute, catchy, and easy to say
-- Suitable for the pet's personality traits: ${description}
+- Suitable for a dog with these personality traits: ${description}
 - Based on the following tone: ${tone}`;
 
       const response = await fetch('https://groq-webhook-worker.digimajbusinessenterprise.workers.dev/api/groq', {
@@ -164,7 +196,7 @@ You MUST respond with a valid JSON structure containing an array of name objects
     } finally {
       setIsGenerating(false);
     }
-  }, [description, petType, tone, numberOfNames, toast]);
+  }, [description, tone, numberOfNames, toast]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -186,10 +218,20 @@ You MUST respond with a valid JSON structure containing an array of name objects
   return (
     <>
       <Helmet>
-        <title>AI Pet Name Generator | Create Perfect Pet Names</title>
-        <meta name="description" content="Generate creative and unique pet names with our AI-powered tool. Get instant suggestions with personality traits and name meanings." />
+        <title>AI Dog Name Generator | Perfect Dog Names | Name Hive</title>
+        <meta name="description" content="Generate creative and unique dog names with our AI-powered tool. Find the perfect name for your canine companion based on personality and breed." />
+        <meta name="keywords" content="dog name generator, puppy names, dog names, canine names, pet names for dogs, AI dog names" />
+        <meta property="og:title" content="AI Dog Name Generator | Perfect Dog Names | Name Hive" />
+        <meta property="og:description" content="Find the perfect name for your canine companion with our AI-powered dog name generator." />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="AI Dog Name Generator | Name Hive" />
+        <meta name="twitter:description" content="Generate unique and meaningful dog names based on personality and breed." />
         <script type="application/ld+json">
           {JSON.stringify(schema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(faqSchema)}
         </script>
       </Helmet>
       <div className="min-h-screen bg-gradient-to-b from-white to-purple-50 flex flex-col">
@@ -199,13 +241,13 @@ You MUST respond with a valid JSON structure containing an array of name objects
           <div className="page-container relative z-10">
             <div className="max-w-3xl mx-auto text-center">
               <div className="size-20 bg-purple-200 text-purple-600 mx-auto rounded-2xl flex items-center justify-center mb-6 animate-float shadow-md">
-                <Cat className="size-10" />
+                <Dog className="size-10" />
               </div>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-purple-800">
-                Pet Name Generator
+                Dog Name Generator
               </h1>
               <p className="text-xl text-purple-700 mb-8">
-                Generate unique, meaningful names for your furry friends
+                Generate unique, meaningful names for your canine companion
               </p>
             </div>
           </div>
@@ -217,19 +259,6 @@ You MUST respond with a valid JSON structure containing an array of name objects
               <div className="glass-purple p-8 mb-12 shadow-lg rounded-xl bg-white/40 backdrop-blur-sm border border-purple-100">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label htmlFor="petType" className="block text-sm font-medium text-purple-800 mb-2">
-                        Pet Type
-                      </label>
-                      <Input 
-                        id="petType"
-                        type="text"
-                        placeholder="Enter pet type (e.g., cat, dog, hamster)"
-                        value={petType}
-                        onChange={(e) => setPetType(e.target.value)}
-                        className="bg-white/70 border-purple-200 focus-visible:ring-purple-500"
-                      />
-                    </div>
                     <div>
                       <label htmlFor="numberOfNames" className="block text-sm font-medium text-purple-800 mb-2">
                         Number of Names
@@ -248,13 +277,33 @@ You MUST respond with a valid JSON structure containing an array of name objects
                         </SelectContent>
                       </Select>
                     </div>
+                    <div>
+                      <label htmlFor="tone" className="block text-sm font-medium text-purple-800 mb-2">
+                        Naming Style
+                      </label>
+                      <Select 
+                        value={tone} 
+                        onValueChange={setTone}
+                      >
+                        <SelectTrigger className="bg-white/70 border-purple-200 focus-visible:ring-purple-500">
+                          <SelectValue placeholder="Naming style" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="fun">Fun & Playful</SelectItem>
+                          <SelectItem value="cute">Cute & Adorable</SelectItem>
+                          <SelectItem value="strong">Strong & Brave</SelectItem>
+                          <SelectItem value="elegant">Elegant & Sophisticated</SelectItem>
+                          <SelectItem value="unique">Unique & Uncommon</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                     <div className="md:col-span-2">
                       <label htmlFor="description" className="block text-sm font-medium text-purple-800 mb-2">
-                        Pet's Personality
+                        Dog's Personality & Characteristics
                       </label>
                       <Textarea 
                         id="description"
-                        placeholder="Describe your pet's personality traits"
+                        placeholder="Describe your dog's personality traits, breed, appearance, etc."
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         className="min-h-[100px] bg-white/70 border-purple-200 focus-visible:ring-purple-500"
@@ -277,7 +326,7 @@ You MUST respond with a valid JSON structure containing an array of name objects
                       ) : (
                         <>
                           <Heart className="mr-2 h-5 w-5" />
-                          Generate Pet Names
+                          Generate Dog Names
                         </>
                       )}
                     </Button>
@@ -288,7 +337,7 @@ You MUST respond with a valid JSON structure containing an array of name objects
               {/* Results Section */}
               {generatedNames.length > 0 && (
                 <div className="space-y-8">
-                  <h2 className="text-2xl font-bold text-purple-800 text-center">Generated Pet Names</h2>
+                  <h2 className="text-2xl font-bold text-purple-800 text-center">Generated Dog Names</h2>
                   <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
                     {generatedNames.map((nameObj, index) => (
                       <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow card-gradient border border-purple-200/50">
@@ -399,13 +448,10 @@ You MUST respond with a valid JSON structure containing an array of name objects
               {generatedNames.length === 0 && !isGenerating && (
                 <div className="glass-purple p-12 text-center rounded-xl bg-white/40 backdrop-blur-sm border border-purple-100">
                   <div className="flex justify-center mb-6">
-                    <div className="flex flex-col items-center">
-                      <Dog className="size-12 text-purple-600 mb-2" />
-                      <Cat className="size-8 text-purple-700" />
-                    </div>
+                    <Dog className="size-12 text-purple-600 mb-2" />
                   </div>
                   <p className="text-purple-700 mb-4">
-                    Fill in the form to generate the perfect name for your pet
+                    Fill in the form to generate the perfect name for your dog
                   </p>
                   <Button
                     onClick={handleSubmit}
@@ -428,36 +474,30 @@ You MUST respond with a valid JSON structure containing an array of name objects
             <div className="max-w-4xl mx-auto">
               <Accordion type="single" collapsible className="space-y-4">
                 <AccordionItem value="item-1" className="bg-white/70 rounded-lg">
-                  <AccordionTrigger className="px-4">What is a pet name generator?</AccordionTrigger>
+                  <AccordionTrigger className="px-4">How do I choose the right name for my dog?</AccordionTrigger>
                   <AccordionContent className="px-4 pb-4">
-                    <p>Our AI-powered pet name generator creates unique and adorable names based on your pet's type and personality traits. It helps you find the perfect name that matches your pet's characteristics.</p>
+                    <p>The best dog names are those that match your dog's personality, are easy to pronounce, and won't be confused with common commands like "sit" or "stay." Consider your dog's breed, size, color, and distinctive traits when choosing a name.</p>
                   </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="item-2" className="bg-white/70 rounded-lg">
-                  <AccordionTrigger className="px-4">How does the pet name generator work?</AccordionTrigger>
+                  <AccordionTrigger className="px-4">How many syllables should a dog name have?</AccordionTrigger>
                   <AccordionContent className="px-4 pb-4">
-                    <p>Simply enter your pet's type and personality traits, then choose how many names you'd like to generate. Our AI analyzes your input and creates personalized name suggestions with meanings and personality traits.</p>
+                    <p>Dogs typically respond best to one or two-syllable names as they're easier to recognize. However, you can choose longer names and use a shortened version for commands. What matters most is consistency in how you call your dog.</p>
                   </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="item-3" className="bg-white/70 rounded-lg">
-                  <AccordionTrigger className="px-4">Why is choosing the right pet name important?</AccordionTrigger>
+                  <AccordionTrigger className="px-4">What are popular dog naming trends?</AccordionTrigger>
                   <AccordionContent className="px-4 pb-4">
-                    <p>A pet's name becomes part of their identity and can reflect their personality. It's also something you'll use daily, so it should be meaningful and easy to pronounce.</p>
+                    <p>Currently popular dog naming trends include human names (like Max, Charlie, or Bella), food-inspired names (Cookie, Pepper), nature-themed names (River, Storm), and pop culture references from popular shows, movies, or books.</p>
                   </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="item-4" className="bg-white/70 rounded-lg">
-                  <AccordionTrigger className="px-4">What makes a good pet name?</AccordionTrigger>
+                  <AccordionTrigger className="px-4">Should I consider my dog's breed when naming them?</AccordionTrigger>
                   <AccordionContent className="px-4 pb-4">
-                    <ul className="list-disc pl-6 space-y-2 text-left">
-                      <li>Easy to pronounce and remember</li>
-                      <li>Suits your pet's personality</li>
-                      <li>Something you're comfortable calling in public</li>
-                      <li>Meaningful to you and your family</li>
-                      <li>Unique but not too complicated</li>
-                    </ul>
+                    <p>A dog's breed can provide excellent inspiration for names. For example, German Shepherds might suit German names, while Akitas might benefit from Japanese-inspired names. However, the most important factor is finding a name you love that fits your dog's unique personality.</p>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
@@ -470,8 +510,8 @@ You MUST respond with a valid JSON structure containing an array of name objects
           <div className="page-container">
             <div className="max-w-4xl mx-auto space-y-12">
               <div className="text-center">
-                <h2 className="text-3xl font-bold text-purple-800 mb-4">How to Use the Pet Name Generator</h2>
-                <p className="text-lg text-purple-600">Follow these simple steps to find the perfect name for your pet</p>
+                <h2 className="text-3xl font-bold text-purple-800 mb-4">How to Use the Dog Name Generator</h2>
+                <p className="text-lg text-purple-600">Follow these simple steps to find the perfect name for your dog</p>
               </div>
 
               <div className="grid gap-8 md:grid-cols-2">
@@ -479,11 +519,11 @@ You MUST respond with a valid JSON structure containing an array of name objects
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <span className="size-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center">1</span>
-                      Enter Pet Type
+                      Select Naming Style
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p>Start by specifying what kind of pet you have (e.g., cat, dog, rabbit, etc.).</p>
+                    <p>Choose between fun & playful, cute & adorable, strong & brave, elegant & sophisticated, or unique & uncommon naming styles.</p>
                   </CardContent>
                 </Card>
 
@@ -491,11 +531,11 @@ You MUST respond with a valid JSON structure containing an array of name objects
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <span className="size-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center">2</span>
-                      Describe Personality
+                      Describe Your Dog
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p>Tell us about your pet's personality traits, temperament, and any unique characteristics.</p>
+                    <p>Tell us about your dog's personality traits, breed, appearance, and any unique characteristics that make them special.</p>
                   </CardContent>
                 </Card>
 
@@ -507,7 +547,7 @@ You MUST respond with a valid JSON structure containing an array of name objects
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p>Click generate and let our AI create personalized name suggestions for your pet.</p>
+                    <p>Click generate and let our AI create personalized name suggestions for your canine companion.</p>
                   </CardContent>
                 </Card>
 
@@ -519,7 +559,7 @@ You MUST respond with a valid JSON structure containing an array of name objects
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p>Click "Show details" to learn more about each name's meaning and why it might suit your pet.</p>
+                    <p>Click "Show details" to learn more about each name's meaning, origin, and why it might be perfect for your dog.</p>
                   </CardContent>
                 </Card>
               </div>
@@ -587,4 +627,4 @@ You MUST respond with a valid JSON structure containing an array of name objects
   );
 };
 
-export default PetNameGenerator;
+export default DogNameGenerator; 

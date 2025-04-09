@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Disallow private pages
+Disallow: /admin
+Disallow: /auth
+Disallow: /api
+
+# Sitemap
+Sitemap: https://namehive.fun/sitemap.xml

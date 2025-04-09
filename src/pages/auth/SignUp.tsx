@@ -1,24 +1,15 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/components/ui/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import AuthLayout from '@/components/layout/AuthLayout';
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Loader2, Mail, Lock } from 'lucide-react';
+import { Loader2, Mail, Lock, User, ArrowRight } from 'lucide-react';
 import * as z from 'zod';
-import { Link } from 'react-router-dom';
+import { Separator } from '@/components/ui/separator';
 
 // Form schema
 const formSchema = z
@@ -40,10 +31,11 @@ const formSchema = z
   });
 
 const SignUp = () => {
-  const { signUp, signUpWithGoogle } = useAuth();
+  const { signUp, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   // Form definition
   const form = useForm<z.infer<typeof formSchema>>({
@@ -89,10 +81,9 @@ const SignUp = () => {
   };
 
   const handleGoogleSignUp = async () => {
-    setIsLoading(true);
+    setIsGoogleLoading(true);
     try {
-      // Implement Google sign up logic here
-      const { error } = await signUpWithGoogle(); // Assuming signUpWithGoogle is defined in useAuth
+      const { error } = await signInWithGoogle();
       if (error) throw error;
       navigate('/dashboard');
     } catch (error: any) {
@@ -102,7 +93,7 @@ const SignUp = () => {
         variant: 'destructive',
       });
     } finally {
-      setIsLoading(false);
+      setIsGoogleLoading(false);
     }
   };
 
@@ -117,98 +108,112 @@ const SignUp = () => {
           variant="outline"
           className="w-full h-12 font-medium relative"
           onClick={handleGoogleSignUp}
-          disabled={isLoading}
+          disabled={isGoogleLoading}
         >
-          {isLoading ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          {isGoogleLoading ? (
+            <Loader2 className="size-5 animate-spin" />
           ) : (
             <>
-              <img src="/google.svg" alt="Google" className="absolute left-4 h-5" />
+              <img src="/google.svg" alt="Google" className="absolute left-4 size-5" />
               Continue with Google
             </>
           )}
         </Button>
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="fullName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Full Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="John Doe" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="name@example.com" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    Password must be at least 6 characters.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Creating account...
-                </>
-              ) : (
-                'Create account'
-              )}
-            </Button>
-          </form>
-        </Form>
-
-        <div className="mt-4 text-center text-sm">
-          Already have an account?{' '}
-          <Link to="/sign-in" className="font-medium text-primary hover:underline">
-            Sign in
-          </Link>
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-background px-2 text-muted-foreground">
+              Or continue with
+            </span>
+          </div>
         </div>
+
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <div className="space-y-2">
+            <div className="relative">
+              <Input
+                id="fullName"
+                placeholder="Full name"
+                {...form.register('fullName')}
+                className="pl-10 h-12"
+              />
+              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 size-5" />
+            </div>
+            {form.formState.errors.fullName && (
+              <p className="text-sm text-red-500">{form.formState.errors.fullName.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <div className="relative">
+              <Input
+                id="email"
+                type="email"
+                placeholder="Email address"
+                {...form.register('email')}
+                className="pl-10 h-12"
+              />
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 size-5" />
+            </div>
+            {form.formState.errors.email && (
+              <p className="text-sm text-red-500">{form.formState.errors.email.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <div className="relative">
+              <Input
+                id="password"
+                type="password"
+                placeholder="Password"
+                {...form.register('password')}
+                className="pl-10 h-12"
+              />
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 size-5" />
+            </div>
+            {form.formState.errors.password && (
+              <p className="text-sm text-red-500">{form.formState.errors.password.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <div className="relative">
+              <Input
+                id="confirmPassword"
+                type="password"
+                placeholder="Confirm password"
+                {...form.register('confirmPassword')}
+                className="pl-10 h-12"
+              />
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 size-5" />
+            </div>
+            {form.formState.errors.confirmPassword && (
+              <p className="text-sm text-red-500">{form.formState.errors.confirmPassword.message}</p>
+            )}
+          </div>
+
+          <Button
+            type="submit"
+            className="w-full h-12 font-medium bg-purple-600 hover:bg-purple-700"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <Loader2 className="size-5 animate-spin" />
+            ) : (
+              'Create account'
+            )}
+          </Button>
+        </form>
+
+        <p className="text-center text-sm text-gray-600">
+          Already have an account?{' '}
+          <Link to="/sign-in" className="text-purple-600 hover:text-purple-700 font-medium">
+            Sign in <ArrowRight className="inline size-4" />
+          </Link>
+        </p>
       </div>
     </AuthLayout>
   );

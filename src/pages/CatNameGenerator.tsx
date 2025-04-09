@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Copy, RefreshCw, Info, Heart, Dog, Cat } from 'lucide-react';
+import { Copy, RefreshCw, Info, Heart, Cat } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Helmet } from 'react-helmet';
 import { 
@@ -33,22 +33,22 @@ interface GeneratedName {
   name_origin: string;
 }
 
-const PetNameGenerator = () => {
+const CatNameGenerator = () => {
   const { toast } = useToast();
   const { user } = useAuth();
   const [description, setDescription] = useState<string>('');
-  const [petType, setPetType] = useState<string>('');
-  const [tone, setTone] = useState<string>('fun');
+  const [tone, setTone] = useState<string>('elegant');
   const [numberOfNames, setNumberOfNames] = useState<string>('7');
   const [generatedNames, setGeneratedNames] = useState<GeneratedName[]>([]);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
 
+  // SEO Schema
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "AI Pet Name Generator",
-    "description": "Generate unique and creative pet names with our AI-powered tool.",
+    "name": "AI Cat Name Generator",
+    "description": "Generate unique and creative cat names with our AI-powered tool.",
     "applicationCategory": "Utility",
     "offers": {
       "@type": "Offer",
@@ -56,11 +56,43 @@ const PetNameGenerator = () => {
     }
   };
 
+  // FAQ Schema for SEO
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I choose the perfect name for my cat?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Consider your cat's personality, appearance, and behavior. Choose a name that's easy to pronounce, distinct, and one that both you and your cat will respond to."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are popular cat naming trends in 2023?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Popular trends include mythology-inspired names, elegant royal names, food-based names, and nature-themed names that reflect your cat's personality or appearance."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can cats actually recognize their names?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Scientific research has shown that cats can indeed recognize their names. A 2019 study published in Scientific Reports confirmed that cats can distinguish their names from other similar-sounding words."
+        }
+      }
+    ]
+  };
+
   const generateNames = useCallback(async () => {
-    if (!petType.trim() || !description.trim()) {
+    if (!description.trim()) {
       toast({
         title: "Missing Information",
-        description: "Please provide both pet type and description",
+        description: "Please provide a description of your cat",
         variant: "destructive"
       });
       return;
@@ -69,23 +101,23 @@ const PetNameGenerator = () => {
     setIsGenerating(true);
 
     try {
-      const systemPrompt = `You are an AI specializing in generating creative and adorable pet names based on user input. You will receive a user prompt describing the desired pet name generation task. Your task is to generate a list of names based on the prompt.
+      const systemPrompt = `You are an AI specializing in generating creative and adorable cat names based on user input. You will receive a user prompt describing the desired cat name generation task. Your task is to generate a list of names based on the prompt.
 You MUST respond with a valid JSON structure containing an array of name objects:
 {
   "names": [
     {
-      "name": "Fluffy",
-      "meaning": "Soft and puffy appearance",
-      "personality_traits": ["Playful", "Gentle", "Friendly"],
-      "why_it_fits": "The name reflects the pet's appearance and gentle nature",
-      "name_origin": "English, descriptive name based on physical characteristics"
+      "name": "Luna",
+      "meaning": "Moon in Latin, reflecting mystery and elegance",
+      "personality_traits": ["Independent", "Mysterious", "Elegant"],
+      "why_it_fits": "The name reflects the cat's graceful nature and nocturnal energy",
+      "name_origin": "Latin word for moon, commonly associated with feline grace and mystery"
     }
   ]
 }`;
 
-      const userPrompt = `Generate ${numberOfNames || 5} unique, creative, and adorable pet name ideas for a ${petType}. The names should be:
-- Cute, catchy, and easy to say
-- Suitable for the pet's personality traits: ${description}
+      const userPrompt = `Generate ${numberOfNames || 5} unique, creative, and adorable cat name ideas. The names should be:
+- Cute, catchy, and fitting for a feline
+- Suitable for a cat with these personality traits: ${description}
 - Based on the following tone: ${tone}`;
 
       const response = await fetch('https://groq-webhook-worker.digimajbusinessenterprise.workers.dev/api/groq', {
@@ -164,7 +196,7 @@ You MUST respond with a valid JSON structure containing an array of name objects
     } finally {
       setIsGenerating(false);
     }
-  }, [description, petType, tone, numberOfNames, toast]);
+  }, [description, tone, numberOfNames, toast]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -186,10 +218,20 @@ You MUST respond with a valid JSON structure containing an array of name objects
   return (
     <>
       <Helmet>
-        <title>AI Pet Name Generator | Create Perfect Pet Names</title>
-        <meta name="description" content="Generate creative and unique pet names with our AI-powered tool. Get instant suggestions with personality traits and name meanings." />
+        <title>AI Cat Name Generator | Perfect Feline Names | Name Hive</title>
+        <meta name="description" content="Generate creative and unique cat names with our AI-powered tool. Find the perfect name for your feline friend based on personality and appearance." />
+        <meta name="keywords" content="cat name generator, kitten names, cat names, feline names, pet names for cats, AI cat names" />
+        <meta property="og:title" content="AI Cat Name Generator | Perfect Feline Names | Name Hive" />
+        <meta property="og:description" content="Find the perfect name for your feline companion with our AI-powered cat name generator." />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="AI Cat Name Generator | Name Hive" />
+        <meta name="twitter:description" content="Generate unique and meaningful cat names based on personality and characteristics." />
         <script type="application/ld+json">
           {JSON.stringify(schema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(faqSchema)}
         </script>
       </Helmet>
       <div className="min-h-screen bg-gradient-to-b from-white to-purple-50 flex flex-col">
@@ -202,10 +244,10 @@ You MUST respond with a valid JSON structure containing an array of name objects
                 <Cat className="size-10" />
               </div>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-purple-800">
-                Pet Name Generator
+                Cat Name Generator
               </h1>
               <p className="text-xl text-purple-700 mb-8">
-                Generate unique, meaningful names for your furry friends
+                Generate unique, meaningful names for your feline companion
               </p>
             </div>
           </div>
@@ -217,19 +259,6 @@ You MUST respond with a valid JSON structure containing an array of name objects
               <div className="glass-purple p-8 mb-12 shadow-lg rounded-xl bg-white/40 backdrop-blur-sm border border-purple-100">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label htmlFor="petType" className="block text-sm font-medium text-purple-800 mb-2">
-                        Pet Type
-                      </label>
-                      <Input 
-                        id="petType"
-                        type="text"
-                        placeholder="Enter pet type (e.g., cat, dog, hamster)"
-                        value={petType}
-                        onChange={(e) => setPetType(e.target.value)}
-                        className="bg-white/70 border-purple-200 focus-visible:ring-purple-500"
-                      />
-                    </div>
                     <div>
                       <label htmlFor="numberOfNames" className="block text-sm font-medium text-purple-800 mb-2">
                         Number of Names
@@ -248,13 +277,33 @@ You MUST respond with a valid JSON structure containing an array of name objects
                         </SelectContent>
                       </Select>
                     </div>
+                    <div>
+                      <label htmlFor="tone" className="block text-sm font-medium text-purple-800 mb-2">
+                        Naming Style
+                      </label>
+                      <Select 
+                        value={tone} 
+                        onValueChange={setTone}
+                      >
+                        <SelectTrigger className="bg-white/70 border-purple-200 focus-visible:ring-purple-500">
+                          <SelectValue placeholder="Naming style" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="elegant">Elegant & Sophisticated</SelectItem>
+                          <SelectItem value="cute">Cute & Adorable</SelectItem>
+                          <SelectItem value="mythical">Mythical & Magical</SelectItem>
+                          <SelectItem value="quirky">Quirky & Playful</SelectItem>
+                          <SelectItem value="regal">Regal & Majestic</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                     <div className="md:col-span-2">
                       <label htmlFor="description" className="block text-sm font-medium text-purple-800 mb-2">
-                        Pet's Personality
+                        Cat's Personality & Characteristics
                       </label>
                       <Textarea 
                         id="description"
-                        placeholder="Describe your pet's personality traits"
+                        placeholder="Describe your cat's personality traits, breed, appearance, etc."
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         className="min-h-[100px] bg-white/70 border-purple-200 focus-visible:ring-purple-500"
@@ -277,7 +326,7 @@ You MUST respond with a valid JSON structure containing an array of name objects
                       ) : (
                         <>
                           <Heart className="mr-2 h-5 w-5" />
-                          Generate Pet Names
+                          Generate Cat Names
                         </>
                       )}
                     </Button>
@@ -288,7 +337,7 @@ You MUST respond with a valid JSON structure containing an array of name objects
               {/* Results Section */}
               {generatedNames.length > 0 && (
                 <div className="space-y-8">
-                  <h2 className="text-2xl font-bold text-purple-800 text-center">Generated Pet Names</h2>
+                  <h2 className="text-2xl font-bold text-purple-800 text-center">Generated Cat Names</h2>
                   <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
                     {generatedNames.map((nameObj, index) => (
                       <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow card-gradient border border-purple-200/50">
@@ -399,13 +448,10 @@ You MUST respond with a valid JSON structure containing an array of name objects
               {generatedNames.length === 0 && !isGenerating && (
                 <div className="glass-purple p-12 text-center rounded-xl bg-white/40 backdrop-blur-sm border border-purple-100">
                   <div className="flex justify-center mb-6">
-                    <div className="flex flex-col items-center">
-                      <Dog className="size-12 text-purple-600 mb-2" />
-                      <Cat className="size-8 text-purple-700" />
-                    </div>
+                    <Cat className="size-12 text-purple-600 mb-2" />
                   </div>
                   <p className="text-purple-700 mb-4">
-                    Fill in the form to generate the perfect name for your pet
+                    Fill in the form to generate the perfect name for your cat
                   </p>
                   <Button
                     onClick={handleSubmit}
@@ -428,36 +474,30 @@ You MUST respond with a valid JSON structure containing an array of name objects
             <div className="max-w-4xl mx-auto">
               <Accordion type="single" collapsible className="space-y-4">
                 <AccordionItem value="item-1" className="bg-white/70 rounded-lg">
-                  <AccordionTrigger className="px-4">What is a pet name generator?</AccordionTrigger>
+                  <AccordionTrigger className="px-4">How do I pick the perfect cat name?</AccordionTrigger>
                   <AccordionContent className="px-4 pb-4">
-                    <p>Our AI-powered pet name generator creates unique and adorable names based on your pet's type and personality traits. It helps you find the perfect name that matches your pet's characteristics.</p>
+                    <p>The perfect cat name reflects your cat's unique personality and appearance. Consider their behaviors, physical traits, and the sounds they respond to. Many cat owners find that names ending with an "ee" sound (like Kitty, Mochi, or Cleo) get the best response from felines.</p>
                   </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="item-2" className="bg-white/70 rounded-lg">
-                  <AccordionTrigger className="px-4">How does the pet name generator work?</AccordionTrigger>
+                  <AccordionTrigger className="px-4">Do cats actually respond to their names?</AccordionTrigger>
                   <AccordionContent className="px-4 pb-4">
-                    <p>Simply enter your pet's type and personality traits, then choose how many names you'd like to generate. Our AI analyzes your input and creates personalized name suggestions with meanings and personality traits.</p>
+                    <p>Yes! Scientific research has confirmed that cats can recognize their names. A study published in Scientific Reports found that cats can distinguish their names from other similar-sounding words, even when called by a stranger. However, whether they choose to respond is another matter entirely!</p>
                   </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="item-3" className="bg-white/70 rounded-lg">
-                  <AccordionTrigger className="px-4">Why is choosing the right pet name important?</AccordionTrigger>
+                  <AccordionTrigger className="px-4">What are popular cat naming trends?</AccordionTrigger>
                   <AccordionContent className="px-4 pb-4">
-                    <p>A pet's name becomes part of their identity and can reflect their personality. It's also something you'll use daily, so it should be meaningful and easy to pronounce.</p>
+                    <p>Current popular cat naming trends include mythology-inspired names (Luna, Apollo, Athena), food names (Mochi, Wasabi, Biscuit), elegant names (Duchess, Prince, Lady), nature-themed names (Willow, Sky, River), and classic human names (Oliver, Sophie, Max).</p>
                   </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="item-4" className="bg-white/70 rounded-lg">
-                  <AccordionTrigger className="px-4">What makes a good pet name?</AccordionTrigger>
+                  <AccordionTrigger className="px-4">Should I consider my cat's breed when naming them?</AccordionTrigger>
                   <AccordionContent className="px-4 pb-4">
-                    <ul className="list-disc pl-6 space-y-2 text-left">
-                      <li>Easy to pronounce and remember</li>
-                      <li>Suits your pet's personality</li>
-                      <li>Something you're comfortable calling in public</li>
-                      <li>Meaningful to you and your family</li>
-                      <li>Unique but not too complicated</li>
-                    </ul>
+                    <p>A cat's breed can provide wonderful inspiration for names. For example, Russian Blue cats might suit Russian names, while Siamese cats might benefit from Thai-inspired names. Maine Coons often get rugged, outdoorsy names that match their wilderness origins. However, the most important factor is finding a name that feels right for your specific cat's personality.</p>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
@@ -470,8 +510,8 @@ You MUST respond with a valid JSON structure containing an array of name objects
           <div className="page-container">
             <div className="max-w-4xl mx-auto space-y-12">
               <div className="text-center">
-                <h2 className="text-3xl font-bold text-purple-800 mb-4">How to Use the Pet Name Generator</h2>
-                <p className="text-lg text-purple-600">Follow these simple steps to find the perfect name for your pet</p>
+                <h2 className="text-3xl font-bold text-purple-800 mb-4">How to Use the Cat Name Generator</h2>
+                <p className="text-lg text-purple-600">Follow these simple steps to find the perfect name for your feline friend</p>
               </div>
 
               <div className="grid gap-8 md:grid-cols-2">
@@ -479,11 +519,11 @@ You MUST respond with a valid JSON structure containing an array of name objects
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <span className="size-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center">1</span>
-                      Enter Pet Type
+                      Select Naming Style
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p>Start by specifying what kind of pet you have (e.g., cat, dog, rabbit, etc.).</p>
+                    <p>Choose between elegant & sophisticated, cute & adorable, mythical & magical, quirky & playful, or regal & majestic naming styles.</p>
                   </CardContent>
                 </Card>
 
@@ -491,11 +531,11 @@ You MUST respond with a valid JSON structure containing an array of name objects
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <span className="size-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center">2</span>
-                      Describe Personality
+                      Describe Your Cat
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p>Tell us about your pet's personality traits, temperament, and any unique characteristics.</p>
+                    <p>Tell us about your cat's personality traits, breed, appearance, and any unique characteristics that make them special.</p>
                   </CardContent>
                 </Card>
 
@@ -507,7 +547,7 @@ You MUST respond with a valid JSON structure containing an array of name objects
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p>Click generate and let our AI create personalized name suggestions for your pet.</p>
+                    <p>Click generate and let our AI create personalized name suggestions for your feline companion.</p>
                   </CardContent>
                 </Card>
 
@@ -519,7 +559,7 @@ You MUST respond with a valid JSON structure containing an array of name objects
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p>Click "Show details" to learn more about each name's meaning and why it might suit your pet.</p>
+                    <p>Click "Show details" to learn more about each name's meaning, origin, and why it might be perfect for your cat.</p>
                   </CardContent>
                 </Card>
               </div>
@@ -587,4 +627,4 @@ You MUST respond with a valid JSON structure containing an array of name objects
   );
 };
 
-export default PetNameGenerator;
+export default CatNameGenerator; 

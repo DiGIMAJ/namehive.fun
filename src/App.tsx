@@ -25,6 +25,10 @@ import SubscriptionSuccessPage from '@/pages/SubscriptionSuccessPage';
 import RandomNameGenerator from '@/pages/RandomNameGenerator';
 import PodcastNameGenerator from '@/pages/PodcastNameGenerator';
 import PetNameGenerator from '@/pages/PetNameGenerator';
+import DogNameGenerator from '@/pages/DogNameGenerator';
+import CatNameGenerator from '@/pages/CatNameGenerator';
+import WarriorCatNameGenerator from '@/pages/WarriorCatNameGenerator';
+import HorseNameGenerator from '@/pages/HorseNameGenerator';
 
 // Category pages
 import BusinessBrandPage from '@/pages/BusinessBrandPage';
@@ -72,6 +76,10 @@ function App() {
           <Route path="/generator/random" element={<RandomNameGenerator />} />
           <Route path="/ai-podcast-name-generator" element={<PodcastNameGenerator />} />
           <Route path="/ai-pet-name-generator" element={<PetNameGenerator />} />
+          <Route path="/ai-dog-name-generator" element={<DogNameGenerator />} />
+          <Route path="/ai-cat-name-generator" element={<CatNameGenerator />} />
+          <Route path="/ai-warrior-cat-name-generator" element={<WarriorCatNameGenerator />} />
+          <Route path="/ai-horse-name-generator" element={<HorseNameGenerator />} />
 
           {/* Category pages */}
           <Route path="/business-brand" element={<BusinessBrandPage />} />

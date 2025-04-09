@@ -1,5 +1,4 @@
-
-import { PlusCircle, Utensils, Dog, Baby, Dumbbell, Shirt, Flame, Flower2, Car, CalendarDays } from 'lucide-react';
+import { PlusCircle, Utensils, Dog, Baby, Dumbbell, Shirt, Flame, Flower2, Car, CalendarDays, Cat, House, Sword } from 'lucide-react';
 import CategoryPage from '@/components/category/CategoryPage';
 
 const NicheSpecificPage = () => {
@@ -16,6 +15,34 @@ const NicheSpecificPage = () => {
       icon: Dog,
       color: "bg-rose-50 text-rose-600",
       path: "/ai-pet-name-generator"
+    },
+    {
+      title: "Dog Name Generator",
+      description: "Find the perfect name for your canine companion.",
+      icon: Dog,
+      color: "bg-rose-50 text-rose-600",
+      path: "/ai-dog-name-generator"
+    },
+    {
+      title: "Cat Name Generator",
+      description: "Discover unique and creative names for your feline friend.",
+      icon: Cat,
+      color: "bg-rose-50 text-rose-600",
+      path: "/ai-cat-name-generator"
+    },
+    {
+      title: "Horse Name Generator",
+      description: "Generate perfect names for your equine companion.",
+      icon: House,
+      color: "bg-rose-50 text-rose-600",
+      path: "/ai-horse-name-generator"
+    },
+    {
+      title: "Warrior Cat Name Generator",
+      description: "Create epic clan-based names for warrior cats.",
+      icon: Sword,
+      color: "bg-rose-50 text-rose-600",
+      path: "/ai-warrior-cat-name-generator"
     },
     {
       title: "Baby Name Finder",
