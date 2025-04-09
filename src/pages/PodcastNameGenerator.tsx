@@ -1,5 +1,4 @@
-
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
@@ -28,6 +27,8 @@ import {
 } from "@/components/ui/badge";
 import FavoriteButton from '@/components/podcast/FavoriteButton';
 import { useAuth } from '@/context/AuthContext';
+import { Helmet } from 'react-helmet';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 interface GeneratedName {
   name: string;
@@ -41,10 +42,6 @@ interface GeneratedName {
 interface GeneratorResponse {
   names: GeneratedName[];
 }
-
-// Add imports at the top
-import { Helmet } from 'react-helmet';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const PodcastNameGenerator = () => {
   const { toast } = useToast();
@@ -85,12 +82,26 @@ const PodcastNameGenerator = () => {
       }
     ]
   };
+
   const [description, setDescription] = useState<string>('');
   const [niche, setNiche] = useState<string>('');
   const [numberOfNames, setNumberOfNames] = useState<string>('7');
   const [generatedNames, setGeneratedNames] = useState<GeneratedName[]>([]);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
+
+  // Add Adsterra Social Bar script to the page
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = '//pl26337968.profitableratecpm.com/d1/c3/4b/d1c34b54771a008765d3faaae652ce6d.js';
+    script.async = true;
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
 
   const generateNames = useCallback(async () => {
     setIsGenerating(true);
@@ -412,6 +423,12 @@ const PodcastNameGenerator = () => {
             </div>
           </div>
         </section>
+
+        {/* Adsterra Native Banner Ad */}
+        <div className="my-8 max-w-4xl mx-auto">
+          <script async="async" data-cfasync="false" src="//pl26337987.profitableratecpm.com/132e23d9e3b100b8ba7ad79b8a165533/invoke.js"></script>
+          <div id="container-132e23d9e3b100b8ba7ad79b8a165533"></div>
+        </div>
 
         {/* FAQ Section */}
         <section className="py-16 bg-white/50">

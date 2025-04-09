@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -214,6 +214,19 @@ You MUST respond with a valid JSON structure containing an array of name objects
   const toggleCardExpansion = (index: number) => {
     setExpandedCard(expandedCard === index ? null : index);
   };
+
+  // Add Adsterra Social Bar script to the page
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = '//pl26337968.profitableratecpm.com/d1/c3/4b/d1c34b54771a008765d3faaae652ce6d.js';
+    script.async = true;
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
 
   return (
     <>
@@ -566,6 +579,12 @@ You MUST respond with a valid JSON structure containing an array of name objects
             </div>
           </div>
         </section>
+
+        {/* Adsterra Native Banner Ad */}
+        <div className="my-8 max-w-4xl mx-auto">
+          <script async={true} data-cfasync="false" src="//pl26337987.profitableratecpm.com/132e23d9e3b100b8ba7ad79b8a165533/invoke.js"></script>
+          <div id="container-132e23d9e3b100b8ba7ad79b8a165533"></div>
+        </div>
       </main>
         
         {/* Replace the Footer component with a custom footer implementation */}

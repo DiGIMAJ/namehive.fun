@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -216,6 +216,19 @@ You MUST respond with a valid JSON structure containing an array of name objects
     setExpandedCard(expandedCard === index ? null : index);
   };
 
+  // Add Adsterra Social Bar script to the page
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = '//pl26337968.profitableratecpm.com/d1/c3/4b/d1c34b54771a008765d3faaae652ce6d.js';
+    script.async = true;
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -235,348 +248,352 @@ You MUST respond with a valid JSON structure containing an array of name objects
           {JSON.stringify(faqSchema)}
         </script>
       </Helmet>
-      <div className="min-h-screen bg-gradient-to-b from-white to-indigo-50 flex flex-col">
-      <Navbar />
+      <div className="min-h-screen bg-gradient-to-b from-white to-amber-50 flex flex-col">
+        <Navbar />
         <main className="flex-grow scroll-smooth">
-        <section className="pt-32 pb-16 bg-gradient-to-b from-indigo-100 to-indigo-50 relative">
-          <div className="page-container relative z-10">
-            <div className="max-w-3xl mx-auto text-center">
-              <div className="size-20 bg-indigo-200 text-indigo-600 mx-auto rounded-2xl flex items-center justify-center mb-6 animate-float shadow-md">
-                <div className="relative">
-                  <Cat className="size-10" />
-                  <Shield className="size-4 absolute bottom-0 right-0" />
+          <section className="pt-32 pb-16 bg-gradient-to-b from-indigo-100 to-indigo-50 relative">
+            <div className="page-container relative z-10">
+              <div className="max-w-3xl mx-auto text-center">
+                <div className="size-20 bg-indigo-200 text-indigo-600 mx-auto rounded-2xl flex items-center justify-center mb-6 animate-float shadow-md">
+                  <div className="relative">
+                    <Cat className="size-10" />
+                    <Shield className="size-4 absolute bottom-0 right-0" />
+                  </div>
                 </div>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-indigo-800">
+                  Warrior Cat Name Generator
+                </h1>
+                <p className="text-xl text-indigo-700 mb-8">
+                  Generate epic, clan-worthy names for your warrior cat
+                </p>
               </div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-indigo-800">
-                Warrior Cat Name Generator
-              </h1>
-              <p className="text-xl text-indigo-700 mb-8">
-                Generate epic, clan-worthy names for your warrior cat
-              </p>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section className="py-16">
-          <div className="page-container">
-            <div className="max-w-4xl mx-auto">
-              <div className="glass-indigo p-8 mb-12 shadow-lg rounded-xl bg-white/40 backdrop-blur-sm border border-indigo-100">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label htmlFor="numberOfNames" className="block text-sm font-medium text-indigo-800 mb-2">
-                        Number of Names
-                      </label>
-                      <Select 
-                        value={numberOfNames} 
-                        onValueChange={setNumberOfNames}
-                      >
-                        <SelectTrigger className="bg-white/70 border-indigo-200 focus-visible:ring-indigo-500">
-                          <SelectValue placeholder="Number of names" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="3">3 names</SelectItem>
-                          <SelectItem value="7">7 names</SelectItem>
-                          <SelectItem value="15">15 names</SelectItem>
-                        </SelectContent>
-                      </Select>
+          <section className="py-16">
+            <div className="page-container">
+              <div className="max-w-4xl mx-auto">
+                <div className="glass-indigo p-8 mb-12 shadow-lg rounded-xl bg-white/40 backdrop-blur-sm border border-indigo-100">
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <label htmlFor="numberOfNames" className="block text-sm font-medium text-indigo-800 mb-2">
+                          Number of Names
+                        </label>
+                        <Select 
+                          value={numberOfNames} 
+                          onValueChange={setNumberOfNames}
+                        >
+                          <SelectTrigger className="bg-white/70 border-indigo-200 focus-visible:ring-indigo-500">
+                            <SelectValue placeholder="Number of names" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="3">3 names</SelectItem>
+                            <SelectItem value="7">7 names</SelectItem>
+                            <SelectItem value="15">15 names</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <label htmlFor="clan" className="block text-sm font-medium text-indigo-800 mb-2">
+                          Clan
+                        </label>
+                        <Select 
+                          value={clan} 
+                          onValueChange={setClan}
+                        >
+                          <SelectTrigger className="bg-white/70 border-indigo-200 focus-visible:ring-indigo-500">
+                            <SelectValue placeholder="Choose a clan" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="thunderclan">ThunderClan</SelectItem>
+                            <SelectItem value="riverclan">RiverClan</SelectItem>
+                            <SelectItem value="windclan">WindClan</SelectItem>
+                            <SelectItem value="shadowclan">ShadowClan</SelectItem>
+                            <SelectItem value="skyclan">SkyClan</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="md:col-span-2">
+                        <label htmlFor="description" className="block text-sm font-medium text-indigo-800 mb-2">
+                          Cat's Personality & Appearance
+                        </label>
+                        <Textarea 
+                          id="description"
+                          placeholder="Describe your warrior cat's personality traits, appearance, battle skills, etc."
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                          className="min-h-[100px] bg-white/70 border-indigo-200 focus-visible:ring-indigo-500"
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <label htmlFor="clan" className="block text-sm font-medium text-indigo-800 mb-2">
-                        Clan
-                      </label>
-                      <Select 
-                        value={clan} 
-                        onValueChange={setClan}
+                    
+                    <div className="flex justify-center pt-4">
+                      <Button 
+                        type="submit" 
+                        className="bg-indigo-600 hover:bg-indigo-700 text-white text-lg px-8 py-6 button-glow"
+                        disabled={isGenerating}
+                        size="lg"
                       >
-                        <SelectTrigger className="bg-white/70 border-indigo-200 focus-visible:ring-indigo-500">
-                          <SelectValue placeholder="Choose a clan" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="thunderclan">ThunderClan</SelectItem>
-                          <SelectItem value="riverclan">RiverClan</SelectItem>
-                          <SelectItem value="windclan">WindClan</SelectItem>
-                          <SelectItem value="shadowclan">ShadowClan</SelectItem>
-                          <SelectItem value="skyclan">SkyClan</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        {isGenerating ? (
+                          <>
+                            <RefreshCw className="mr-2 h-5 w-5 animate-spin" />
+                            Generating...
+                          </>
+                        ) : (
+                          <>
+                            <Sword className="mr-2 h-5 w-5" />
+                            Generate Warrior Names
+                          </>
+                        )}
+                      </Button>
                     </div>
-                    <div className="md:col-span-2">
-                      <label htmlFor="description" className="block text-sm font-medium text-indigo-800 mb-2">
-                        Cat's Personality & Appearance
-                      </label>
-                      <Textarea 
-                        id="description"
-                        placeholder="Describe your warrior cat's personality traits, appearance, battle skills, etc."
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        className="min-h-[100px] bg-white/70 border-indigo-200 focus-visible:ring-indigo-500"
-                      />
+                  </form>
+                </div>
+
+                {/* Results Section */}
+                {generatedNames.length > 0 && (
+                  <div className="space-y-8">
+                    <h2 className="text-2xl font-bold text-indigo-800 text-center">Generated Warrior Names</h2>
+                    <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
+                      {generatedNames.map((nameObj, index) => (
+                        <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow card-gradient border border-indigo-200/50">
+                          <CardHeader className="pb-4 bg-gradient-to-r from-indigo-100/50 to-transparent">
+                            <div className="flex justify-between items-start">
+                              <CardTitle className="text-xl text-indigo-800">{nameObj.name}</CardTitle>
+                              <div className="flex gap-2">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => handleCopy(nameObj.name, "Name")}
+                                  className="text-indigo-600 hover:text-indigo-800 hover:bg-indigo-100 -mt-2 -mr-2"
+                                >
+                                  <Copy className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            </div>
+                            <CardDescription>
+                              <span className="font-medium">Meaning: </span>
+                              {nameObj.meaning}
+                            </CardDescription>
+                          </CardHeader>
+                          
+                          {expandedCard === index && (
+                            <CardContent className="text-sm space-y-4 pt-0 bg-white/70">
+                              <div>
+                                <div className="flex items-center mb-1">
+                                  <h4 className="font-semibold text-indigo-800">Personality Traits</h4>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleCopy(nameObj.personality_traits.join(", "), "Personality traits")}
+                                    className="h-6 w-6 p-0 text-indigo-600 hover:text-indigo-800 hover:bg-indigo-100"
+                                  >
+                                    <Copy className="h-3 w-3" />
+                                  </Button>
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                  {nameObj.personality_traits.map((trait, i) => (
+                                    <Badge key={i} className="bg-indigo-100 text-indigo-800 hover:bg-indigo-200">
+                                      {trait}
+                                    </Badge>
+                                  ))}
+                                </div>
+                              </div>
+                              
+                              <div>
+                                <div className="flex items-center mb-1">
+                                  <h4 className="font-semibold text-indigo-800">Why It Fits</h4>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleCopy(nameObj.why_it_fits, "Why it fits")}
+                                    className="h-6 w-6 p-0 text-indigo-600 hover:text-indigo-800 hover:bg-indigo-100"
+                                  >
+                                    <Copy className="h-3 w-3" />
+                                  </Button>
+                                </div>
+                                <p className="text-gray-700">{nameObj.why_it_fits}</p>
+                              </div>
+                              
+                              <div>
+                                <div className="flex items-center mb-1">
+                                  <h4 className="font-semibold text-indigo-800">Name Origin</h4>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleCopy(nameObj.name_origin, "Name origin")}
+                                    className="h-6 w-6 p-0 text-indigo-600 hover:text-indigo-800 hover:bg-indigo-100"
+                                  >
+                                    <Copy className="h-3 w-3" />
+                                  </Button>
+                                </div>
+                                <p className="text-gray-700">{nameObj.name_origin}</p>
+                              </div>
+                            </CardContent>
+                          )}
+                          
+                          <CardFooter className="pt-2 pb-4 bg-white/70 flex justify-between">
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              onClick={() => toggleCardExpansion(index)}
+                              className="text-sm text-indigo-600 hover:text-indigo-800 hover:bg-indigo-100 border-indigo-200 flex items-center"
+                            >
+                              <Info className="h-4 w-4 mr-1" />
+                              {expandedCard === index ? "Show less" : "Show details"}
+                            </Button>
+                            
+                            {user && (
+                                <Button 
+                                  variant="outline" 
+                                  size="sm"
+                                  className="text-indigo-600 hover:text-indigo-800 hover:bg-indigo-100 border-indigo-200"
+                                >
+                                  <Heart className="h-4 w-4 mr-1" />
+                                  Favorite
+                                </Button>
+                            )}
+                          </CardFooter>
+                        </Card>
+                      ))}
                     </div>
                   </div>
-                  
-                  <div className="flex justify-center pt-4">
-                    <Button 
-                      type="submit" 
-                      className="bg-indigo-600 hover:bg-indigo-700 text-white text-lg px-8 py-6 button-glow"
-                      disabled={isGenerating}
-                      size="lg"
+                )}
+
+                {/* Empty State */}
+                {generatedNames.length === 0 && !isGenerating && (
+                  <div className="glass-indigo p-12 text-center rounded-xl bg-white/40 backdrop-blur-sm border border-indigo-100">
+                    <div className="flex justify-center mb-6">
+                      <div className="relative">
+                        <Cat className="size-12 text-indigo-600 mb-2" />
+                        <Shield className="size-5 text-indigo-700 absolute bottom-0 right-0" />
+                      </div>
+                    </div>
+                    <p className="text-indigo-700 mb-4">
+                      Fill in the form to generate the perfect warrior name for your cat
+                    </p>
+                    <Button
+                      onClick={handleSubmit}
+                      variant="outline"
+                      className="border-indigo-400 text-indigo-700 hover:bg-indigo-200"
                     >
-                      {isGenerating ? (
-                        <>
-                          <RefreshCw className="mr-2 h-5 w-5 animate-spin" />
-                          Generating...
-                        </>
-                      ) : (
-                        <>
-                          <Sword className="mr-2 h-5 w-5" />
-                          Generate Warrior Names
-                        </>
-                      )}
+                      <Sword className="mr-2 h-4 w-4" />
+                      Generate Names
                     </Button>
                   </div>
-                </form>
+                )}
               </div>
+            </div>
+          </section>
 
-              {/* Results Section */}
-              {generatedNames.length > 0 && (
-                <div className="space-y-8">
-                  <h2 className="text-2xl font-bold text-indigo-800 text-center">Generated Warrior Names</h2>
-                  <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
-                    {generatedNames.map((nameObj, index) => (
-                      <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow card-gradient border border-indigo-200/50">
-                        <CardHeader className="pb-4 bg-gradient-to-r from-indigo-100/50 to-transparent">
-                          <div className="flex justify-between items-start">
-                            <CardTitle className="text-xl text-indigo-800">{nameObj.name}</CardTitle>
-                            <div className="flex gap-2">
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => handleCopy(nameObj.name, "Name")}
-                                className="text-indigo-600 hover:text-indigo-800 hover:bg-indigo-100 -mt-2 -mr-2"
-                              >
-                                <Copy className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </div>
-                          <CardDescription>
-                            <span className="font-medium">Meaning: </span>
-                            {nameObj.meaning}
-                          </CardDescription>
-                        </CardHeader>
-                        
-                        {expandedCard === index && (
-                          <CardContent className="text-sm space-y-4 pt-0 bg-white/70">
-                            <div>
-                              <div className="flex items-center mb-1">
-                                <h4 className="font-semibold text-indigo-800">Personality Traits</h4>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => handleCopy(nameObj.personality_traits.join(", "), "Personality traits")}
-                                  className="h-6 w-6 p-0 text-indigo-600 hover:text-indigo-800 hover:bg-indigo-100"
-                                >
-                                  <Copy className="h-3 w-3" />
-                                </Button>
-                              </div>
-                              <div className="flex flex-wrap gap-2">
-                                {nameObj.personality_traits.map((trait, i) => (
-                                  <Badge key={i} className="bg-indigo-100 text-indigo-800 hover:bg-indigo-200">
-                                    {trait}
-                                  </Badge>
-                                ))}
-                              </div>
-                            </div>
-                            
-                            <div>
-                              <div className="flex items-center mb-1">
-                                <h4 className="font-semibold text-indigo-800">Why It Fits</h4>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => handleCopy(nameObj.why_it_fits, "Why it fits")}
-                                  className="h-6 w-6 p-0 text-indigo-600 hover:text-indigo-800 hover:bg-indigo-100"
-                                >
-                                  <Copy className="h-3 w-3" />
-                                </Button>
-                              </div>
-                              <p className="text-gray-700">{nameObj.why_it_fits}</p>
-                            </div>
-                            
-                            <div>
-                              <div className="flex items-center mb-1">
-                                <h4 className="font-semibold text-indigo-800">Name Origin</h4>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => handleCopy(nameObj.name_origin, "Name origin")}
-                                  className="h-6 w-6 p-0 text-indigo-600 hover:text-indigo-800 hover:bg-indigo-100"
-                                >
-                                  <Copy className="h-3 w-3" />
-                                </Button>
-                              </div>
-                              <p className="text-gray-700">{nameObj.name_origin}</p>
-                            </div>
-                          </CardContent>
-                        )}
-                        
-                        <CardFooter className="pt-2 pb-4 bg-white/70 flex justify-between">
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
-                            onClick={() => toggleCardExpansion(index)}
-                            className="text-sm text-indigo-600 hover:text-indigo-800 hover:bg-indigo-100 border-indigo-200 flex items-center"
-                          >
-                            <Info className="h-4 w-4 mr-1" />
-                            {expandedCard === index ? "Show less" : "Show details"}
-                          </Button>
-                          
-                          {user && (
-                              <Button 
-                                variant="outline" 
-                                size="sm"
-                                className="text-indigo-600 hover:text-indigo-800 hover:bg-indigo-100 border-indigo-200"
-                              >
-                                <Heart className="h-4 w-4 mr-1" />
-                                Favorite
-                              </Button>
-                          )}
-                        </CardFooter>
-                      </Card>
-                    ))}
-                  </div>
+          {/* FAQ Section */}
+          <section className="py-16 bg-white/50">
+            <div className="page-container">
+              <h2 className="text-3xl font-bold text-indigo-800 text-center mb-12">Frequently Asked Questions</h2>
+              <div className="max-w-4xl mx-auto">
+                <Accordion type="single" collapsible className="space-y-4">
+                  <AccordionItem value="item-1" className="bg-white/70 rounded-lg">
+                    <AccordionTrigger className="px-4">How do Warrior Cat names work?</AccordionTrigger>
+                    <AccordionContent className="px-4 pb-4">
+                      <p>In the Warriors universe, cats receive different names as they progress through life stages. Kits are given names ending with "-kit" (like Bluekit). When they become apprentices, their suffix changes to "-paw" (Bluepaw). Once they become warriors, they receive unique suffixes that reflect their skills, appearance, or personality traits (like Bluefur, later Bluestar).</p>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-2" className="bg-white/70 rounded-lg">
+                    <AccordionTrigger className="px-4">What are the different Warrior Cat clans?</AccordionTrigger>
+                    <AccordionContent className="px-4 pb-4">
+                      <p>The five main clans in the Warriors series are: ThunderClan (forest-dwelling cats who are known for their courage), RiverClan (swimming cats who live near water), WindClan (swift cats who live on open moors), ShadowClan (cats who live in marshy pine forests and are known for their cunning), and SkyClan (cats who excel at jumping and climbing trees).</p>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-3" className="bg-white/70 rounded-lg">
+                    <AccordionTrigger className="px-4">What makes a good Warrior Cat name?</AccordionTrigger>
+                    <AccordionContent className="px-4 pb-4">
+                      <p>A good Warrior Cat name should reflect the cat's appearance, personality, or abilities. The prefix is often descriptive (like Storm, Tiger, Bright, Swift), while the suffix complements it and adds meaning (-heart for compassion, -claw for fighting skill, -star for leadership). The best names are meaningful, easy to pronounce, and create a strong identity for the character.</p>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-4" className="bg-white/70 rounded-lg">
+                    <AccordionTrigger className="px-4">Can I use this generator for Warriors fan fiction?</AccordionTrigger>
+                    <AccordionContent className="px-4 pb-4">
+                      <p>Absolutely! This generator is perfect for creating authentic-sounding Warrior Cat names for your fan fiction, role-playing games, or original stories set in the Warriors universe. The names follow the conventions established in the books while providing unique combinations that might not yet exist in the official series.</p>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+            </div>
+          </section>
+
+          {/* How to Use Section */}
+          <section className="py-16 bg-gradient-to-b from-indigo-50 to-white">
+            <div className="page-container">
+              <div className="max-w-4xl mx-auto space-y-12">
+                <div className="text-center">
+                  <h2 className="text-3xl font-bold text-indigo-800 mb-4">How to Use the Warrior Cat Name Generator</h2>
+                  <p className="text-lg text-indigo-600">Follow these simple steps to find the perfect warrior name</p>
                 </div>
-              )}
 
-              {/* Empty State */}
-              {generatedNames.length === 0 && !isGenerating && (
-                <div className="glass-indigo p-12 text-center rounded-xl bg-white/40 backdrop-blur-sm border border-indigo-100">
-                  <div className="flex justify-center mb-6">
-                    <div className="relative">
-                      <Cat className="size-12 text-indigo-600 mb-2" />
-                      <Shield className="size-5 text-indigo-700 absolute bottom-0 right-0" />
-                    </div>
-                  </div>
-                  <p className="text-indigo-700 mb-4">
-                    Fill in the form to generate the perfect warrior name for your cat
-                  </p>
-                  <Button
-                    onClick={handleSubmit}
-                    variant="outline"
-                    className="border-indigo-400 text-indigo-700 hover:bg-indigo-200"
-                  >
-                    <Sword className="mr-2 h-4 w-4" />
-                    Generate Names
-                  </Button>
+                <div className="grid gap-8 md:grid-cols-2">
+                  <Card className="bg-white/70">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <span className="size-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center">1</span>
+                        Choose Your Clan
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p>Select which clan your warrior cat belongs to - ThunderClan, RiverClan, WindClan, ShadowClan, or SkyClan - as this will influence the style of names generated.</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-white/70">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <span className="size-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center">2</span>
+                        Describe Your Warrior
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p>Tell us about your warrior cat's appearance, personality, skills in battle, and any special traits that make them unique within their clan.</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-white/70">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <span className="size-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center">3</span>
+                        Generate Names
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p>Click generate and let our AI create authentic Warrior Cat names that follow the naming conventions of the Warriors series.</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-white/70">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <span className="size-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center">4</span>
+                        Explore Details
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p>Click "Show details" to learn more about each name's meaning, origin, and why it might be perfect for your warrior cat character.</p>
+                    </CardContent>
+                  </Card>
                 </div>
-              )}
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ Section */}
-        <section className="py-16 bg-white/50">
-          <div className="page-container">
-            <h2 className="text-3xl font-bold text-indigo-800 text-center mb-12">Frequently Asked Questions</h2>
-            <div className="max-w-4xl mx-auto">
-              <Accordion type="single" collapsible className="space-y-4">
-                <AccordionItem value="item-1" className="bg-white/70 rounded-lg">
-                  <AccordionTrigger className="px-4">How do Warrior Cat names work?</AccordionTrigger>
-                  <AccordionContent className="px-4 pb-4">
-                    <p>In the Warriors universe, cats receive different names as they progress through life stages. Kits are given names ending with "-kit" (like Bluekit). When they become apprentices, their suffix changes to "-paw" (Bluepaw). Once they become warriors, they receive unique suffixes that reflect their skills, appearance, or personality traits (like Bluefur, later Bluestar).</p>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-2" className="bg-white/70 rounded-lg">
-                  <AccordionTrigger className="px-4">What are the different Warrior Cat clans?</AccordionTrigger>
-                  <AccordionContent className="px-4 pb-4">
-                    <p>The five main clans in the Warriors series are: ThunderClan (forest-dwelling cats who are known for their courage), RiverClan (swimming cats who live near water), WindClan (swift cats who live on open moors), ShadowClan (cats who live in marshy pine forests and are known for their cunning), and SkyClan (cats who excel at jumping and climbing trees).</p>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-3" className="bg-white/70 rounded-lg">
-                  <AccordionTrigger className="px-4">What makes a good Warrior Cat name?</AccordionTrigger>
-                  <AccordionContent className="px-4 pb-4">
-                    <p>A good Warrior Cat name should reflect the cat's appearance, personality, or abilities. The prefix is often descriptive (like Storm, Tiger, Bright, Swift), while the suffix complements it and adds meaning (-heart for compassion, -claw for fighting skill, -star for leadership). The best names are meaningful, easy to pronounce, and create a strong identity for the character.</p>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-4" className="bg-white/70 rounded-lg">
-                  <AccordionTrigger className="px-4">Can I use this generator for Warriors fan fiction?</AccordionTrigger>
-                  <AccordionContent className="px-4 pb-4">
-                    <p>Absolutely! This generator is perfect for creating authentic-sounding Warrior Cat names for your fan fiction, role-playing games, or original stories set in the Warriors universe. The names follow the conventions established in the books while providing unique combinations that might not yet exist in the official series.</p>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </div>
-          </div>
-        </section>
-
-        {/* How to Use Section */}
-        <section className="py-16 bg-gradient-to-b from-indigo-50 to-white">
-          <div className="page-container">
-            <div className="max-w-4xl mx-auto space-y-12">
-              <div className="text-center">
-                <h2 className="text-3xl font-bold text-indigo-800 mb-4">How to Use the Warrior Cat Name Generator</h2>
-                <p className="text-lg text-indigo-600">Follow these simple steps to find the perfect warrior name</p>
-              </div>
-
-              <div className="grid gap-8 md:grid-cols-2">
-                <Card className="bg-white/70">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <span className="size-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center">1</span>
-                      Choose Your Clan
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p>Select which clan your warrior cat belongs to - ThunderClan, RiverClan, WindClan, ShadowClan, or SkyClan - as this will influence the style of names generated.</p>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-white/70">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <span className="size-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center">2</span>
-                      Describe Your Warrior
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p>Tell us about your warrior cat's appearance, personality, skills in battle, and any special traits that make them unique within their clan.</p>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-white/70">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <span className="size-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center">3</span>
-                      Generate Names
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p>Click generate and let our AI create authentic Warrior Cat names that follow the naming conventions of the Warriors series.</p>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-white/70">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <span className="size-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center">4</span>
-                      Explore Details
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p>Click "Show details" to learn more about each name's meaning, origin, and why it might be perfect for your warrior cat character.</p>
-                  </CardContent>
-                </Card>
               </div>
             </div>
+          </section>
+
+          {/* Adsterra Native Banner Ad */}
+          <div className="my-8 max-w-4xl mx-auto">
+            <script async={true} data-cfasync="false" src="//pl26337987.profitableratecpm.com/132e23d9e3b100b8ba7ad79b8a165533/invoke.js"></script>
+            <div id="container-132e23d9e3b100b8ba7ad79b8a165533"></div>
           </div>
-        </section>
-      </main>
-      
-      {/* Footer is included via the App component */}
-    </div>
+        </main>
+      </div>
     </>
   );
 };

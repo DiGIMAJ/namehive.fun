@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -215,6 +215,19 @@ You MUST respond with a valid JSON structure containing an array of name objects
     setExpandedCard(expandedCard === index ? null : index);
   };
 
+  // Add Adsterra Social Bar script to the page
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = '//pl26337968.profitableratecpm.com/d1/c3/4b/d1c34b54771a008765d3faaae652ce6d.js';
+    script.async = true;
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -234,9 +247,237 @@ You MUST respond with a valid JSON structure containing an array of name objects
           {JSON.stringify(faqSchema)}
         </script>
       </Helmet>
-      <div className="min-h-screen bg-gradient-to-b from-white to-amber-50 flex flex-col">
-      <Navbar />
+      <div className="min-h-screen bg-gradient-to-b from-white to-green-50 flex flex-col">
+        <Navbar />
         <main className="flex-grow scroll-smooth">
+          <section className="pt-32 pb-16 bg-gradient-to-b from-amber-100 to-amber-50 relative">
+            <div className="page-container relative z-10">
+              <div className="max-w-3xl mx-auto text-center">
+                <div className="size-20 bg-amber-200 text-amber-600 mx-auto rounded-2xl flex items-center justify-center mb-6 animate-float shadow-md">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="size-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17 19h1c1.1 0 2 .9 2 2H2c0-1.1.9-2 2-2h1" />
+                    <path d="M2 19V7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8" />
+                    <path d="m11 15-1-1 2-2-2-2 1-1 3 3-3 3Z" />
+                  </svg>
+                </div>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-amber-800">
+                  Horse Name Generator
+                </h1>
+                <p className="text-xl text-amber-700 mb-8">
+                  Generate unique, meaningful names for your equine companion
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section className="py-16">
+            <div className="page-container">
+              <div className="max-w-4xl mx-auto">
+                <div className="glass-amber p-8 mb-12 shadow-lg rounded-xl bg-white/40 backdrop-blur-sm border border-amber-100">
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <label htmlFor="numberOfNames" className="block text-sm font-medium text-amber-800 mb-2">
+                          Number of Names
+                        </label>
+                        <Select 
+                          value={numberOfNames} 
+                          onValueChange={setNumberOfNames}
+                        >
+                          <SelectTrigger className="bg-white/70 border-amber-200 focus-visible:ring-amber-500">
+                            <SelectValue placeholder="Number of names" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="3">3 names</SelectItem>
+                            <SelectItem value="7">7 names</SelectItem>
+                            <SelectItem value="15">15 names</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <label htmlFor="horseType" className="block text-sm font-medium text-amber-800 mb-2">
+                          Horse Type
+                        </label>
+                        <Select 
+                          value={horseType} 
+                          onValueChange={setHorseType}
+                        >
+                          <SelectTrigger className="bg-white/70 border-amber-200 focus-visible:ring-amber-500">
+                            <SelectValue placeholder="Select horse type" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="race">Racehorse</SelectItem>
+                            <SelectItem value="show">Show Horse</SelectItem>
+                            <SelectItem value="pleasure">Pleasure Horse</SelectItem>
+                            <SelectItem value="draft">Draft Horse</SelectItem>
+                            <SelectItem value="western">Western Performance</SelectItem>
+                            <SelectItem value="sport">Sport Horse</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="md:col-span-2">
+                        <label htmlFor="description" className="block text-sm font-medium text-amber-800 mb-2">
+                          Horse's Characteristics
+                        </label>
+                        <Textarea 
+                          id="description"
+                          placeholder="Describe your horse's breed, color, personality traits, temperament, etc."
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                          className="min-h-[100px] bg-white/70 border-amber-200 focus-visible:ring-amber-500"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-center pt-4">
+                      <Button 
+                        type="submit" 
+                        className="bg-amber-600 hover:bg-amber-700 text-white text-lg px-8 py-6 button-glow"
+                        disabled={isGenerating}
+                        size="lg"
+                      >
+                        {isGenerating ? (
+                          <>
+                            <RefreshCw className="mr-2 h-5 w-5 animate-spin" />
+                            Generating...
+                          </>
+                        ) : (
+                          <>
+                            <Heart className="mr-2 h-5 w-5" />
+                            Generate Horse Names
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  </form>
+                </div>
+
+                {/* Results Section */}
+                {generatedNames.length > 0 && (
+                  <div className="space-y-8">
+                    <h2 className="text-2xl font-bold text-amber-800 text-center">Generated Horse Names</h2>
+                    <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
+                      {generatedNames.map((nameObj, index) => (
+                        <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow card-gradient border border-amber-200/50">
+                          <CardHeader className="pb-4 bg-gradient-to-r from-amber-100/50 to-transparent">
+                            <div className="flex justify-between items-start">
+                              <CardTitle className="text-xl text-amber-800">{nameObj.name}</CardTitle>
+                              <div className="flex gap-2">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => handleCopy(nameObj.name, "Name")}
+                                  className="text-amber-600 hover:text-amber-800 hover:bg-amber-100 -mt-2 -mr-2"
+                                >
+                                  <Copy className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            </div>
+                            <CardDescription>
+                              <span className="font-medium">Meaning: </span>
+                              {nameObj.meaning}
+                            </CardDescription>
+                          </CardHeader>
+                          
+                          {expandedCard === index && (
+                            <CardContent className="text-sm space-y-4 pt-0 bg-white/70">
+                              <div>
+                                <div className="flex items-center mb-1">
+                                  <h4 className="font-semibold text-amber-800">Personality Traits</h4>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleCopy(nameObj.personality_traits.join(", "), "Personality traits")}
+                                    className="h-6 w-6 p-0 text-amber-600 hover:text-amber-800 hover:bg-amber-100"
+                                  >
+                                    <Copy className="h-3 w-3" />
+                                  </Button>
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                  {nameObj.personality_traits.map((trait, i) => (
+                                    <Badge key={i} className="bg-amber-100 text-amber-800 hover:bg-amber-200">
+                                      {trait}
+                                    </Badge>
+                                  ))}
+                                </div>
+                              </div>
+                              
+                              <div>
+                                <div className="flex items-center mb-1">
+                                  <h4 className="font-semibold text-amber-800">Why It Fits</h4>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleCopy(nameObj.why_it_fits, "Why it fits")}
+                                    className="h-6 w-6 p-0 text-amber-600 hover:text-amber-800 hover:bg-amber-100"
+                                  >
+                                    <Copy className="h-3 w-3" />
+                                  </Button>
+                                </div>
+                                <p className="text-gray-700">{nameObj.why_it_fits}</p>
+                              </div>
+                              
+                              <div>
+                                <div className="flex items-center mb-1">
+                                  <h4 className="font-semibold text-amber-800">Name Origin</h4>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleCopy(nameObj.name_origin, "Name origin")}
+                                    className="h-6 w-6 p-0 text-amber-600 hover:text-amber-800 hover:bg-amber-100"
+                                  >
+                                    <Copy className="h-3 w-3" />
+                                  </Button>
+                                </div>
+                                <p className="text-gray-700">{nameObj.name_origin}</p>
+                              </div>
+                            </CardContent>
+                          )}
+                          
+                          <CardFooter className="pt-2 pb-4 bg-white/70 flex justify-between">
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              onClick={() => toggleCardExpansion(index)}
+                              className="text-sm text-amber-600 hover:text-amber-800 hover:bg-amber-100 border-amber-200 flex items-center"
+                            >
+                              <Info className="h-4 w-4 mr-1" />
+                              {expandedCard === index ? "Show less" : "Show details"}
+                            </Button>
+                            
+                            {user && (
+                                <Button 
+                                  variant="outline" 
+                                  size="sm"
+                                  className="text-amber-600 hover:text-amber-800 hover:bg-amber-100 border-amber-200"
+                                >
+                                  <Heart className="h-4 w-4 mr-1" />
+                                  Favorite
+                                </Button>
+                            )}
+                          </CardFooter>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Empty State */}
+                {generatedNames.length === 0 && !isGenerating && (
+                  <div className="glass-amber p-12 text-center rounded-xl bg-white/40 backdrop-blur-sm border border-amber-100">
+                    <div className="flex justify-center mb-6">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="size-12 text-amber-600 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M17 19h1c1.1 0 2 .9 2 2H2c0-1.1.9-2 2-2h1" />
+                        <path d="M2 19V7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8" />
+                        <path d="m11 15-1-1 2-2-2-2 1-1 3 3-3 3Z" />
+                      </svg>
+                    </div>
+                    <p className="text-amber-700 mb-4">
+                      Fill in the form to generate the perfect name for your horse
+                    </p>
+                    <Button
+                      onClick={handleSubmit}
+                      variant="outline"
         <section className="pt-32 pb-16 bg-gradient-to-b from-amber-100 to-amber-50 relative">
           <div className="page-container relative z-10">
             <div className="max-w-3xl mx-auto text-center">

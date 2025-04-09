@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import Logo from '@/components/common/Logo';
 
@@ -73,6 +72,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/sitemap" className="text-gray-300 hover:text-purple-400 transition-all-300 text-sm block py-1.5 hover:translate-x-1">
+                  Sitemap
+                </Link>
+              </li>
+              <li>
                 <Link to="/privacy" className="text-gray-300 hover:text-purple-400 transition-all-300 text-sm block py-1.5 hover:translate-x-1">
                   Privacy Policy
                 </Link>
@@ -83,7 +87,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/refund" className="text-gray-300 hover:text-purple-400 transition-all-300 text-sm block py-1.5 hover:translate-x-1">
+                <Link to="/refund-policy" className="text-gray-300 hover:text-purple-400 transition-all-300 text-sm block py-1.5 hover:translate-x-1">
                   Refund Policy
                 </Link>
               </li>
