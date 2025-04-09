@@ -478,348 +478,130 @@ You MUST respond with a valid JSON structure containing an array of name objects
                     <Button
                       onClick={handleSubmit}
                       variant="outline"
-        <section className="pt-32 pb-16 bg-gradient-to-b from-amber-100 to-amber-50 relative">
-          <div className="page-container relative z-10">
-            <div className="max-w-3xl mx-auto text-center">
-              <div className="size-20 bg-amber-200 text-amber-600 mx-auto rounded-2xl flex items-center justify-center mb-6 animate-float shadow-md">
-                <svg xmlns="http://www.w3.org/2000/svg" className="size-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M17 19h1c1.1 0 2 .9 2 2H2c0-1.1.9-2 2-2h1" />
-                  <path d="M2 19V7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8" />
-                  <path d="m11 15-1-1 2-2-2-2 1-1 3 3-3 3Z" />
-                </svg>
-              </div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-amber-800">
-                Horse Name Generator
-              </h1>
-              <p className="text-xl text-amber-700 mb-8">
-                Generate unique, meaningful names for your equine companion
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16">
-          <div className="page-container">
-            <div className="max-w-4xl mx-auto">
-              <div className="glass-amber p-8 mb-12 shadow-lg rounded-xl bg-white/40 backdrop-blur-sm border border-amber-100">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label htmlFor="numberOfNames" className="block text-sm font-medium text-amber-800 mb-2">
-                        Number of Names
-                      </label>
-                      <Select 
-                        value={numberOfNames} 
-                        onValueChange={setNumberOfNames}
-                      >
-                        <SelectTrigger className="bg-white/70 border-amber-200 focus-visible:ring-amber-500">
-                          <SelectValue placeholder="Number of names" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="3">3 names</SelectItem>
-                          <SelectItem value="7">7 names</SelectItem>
-                          <SelectItem value="15">15 names</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div>
-                      <label htmlFor="horseType" className="block text-sm font-medium text-amber-800 mb-2">
-                        Horse Type
-                      </label>
-                      <Select 
-                        value={horseType} 
-                        onValueChange={setHorseType}
-                      >
-                        <SelectTrigger className="bg-white/70 border-amber-200 focus-visible:ring-amber-500">
-                          <SelectValue placeholder="Select horse type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="race">Racehorse</SelectItem>
-                          <SelectItem value="show">Show Horse</SelectItem>
-                          <SelectItem value="pleasure">Pleasure Horse</SelectItem>
-                          <SelectItem value="draft">Draft Horse</SelectItem>
-                          <SelectItem value="western">Western Performance</SelectItem>
-                          <SelectItem value="sport">Sport Horse</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="md:col-span-2">
-                      <label htmlFor="description" className="block text-sm font-medium text-amber-800 mb-2">
-                        Horse's Characteristics
-                      </label>
-                      <Textarea 
-                        id="description"
-                        placeholder="Describe your horse's breed, color, personality traits, temperament, etc."
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        className="min-h-[100px] bg-white/70 border-amber-200 focus-visible:ring-amber-500"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="flex justify-center pt-4">
-                    <Button 
-                      type="submit" 
-                      className="bg-amber-600 hover:bg-amber-700 text-white text-lg px-8 py-6 button-glow"
-                      disabled={isGenerating}
-                      size="lg"
+                      className="border-amber-400 text-amber-700 hover:bg-amber-200"
                     >
-                      {isGenerating ? (
-                        <>
-                          <RefreshCw className="mr-2 h-5 w-5 animate-spin" />
-                          Generating...
-                        </>
-                      ) : (
-                        <>
-                          <Heart className="mr-2 h-5 w-5" />
-                          Generate Horse Names
-                        </>
-                      )}
+                      <Heart className="mr-2 h-4 w-4" />
+                      Generate Names
                     </Button>
                   </div>
-                </form>
+                )}
               </div>
+            </div>
+          </section>
 
-              {/* Results Section */}
-              {generatedNames.length > 0 && (
-                <div className="space-y-8">
-                  <h2 className="text-2xl font-bold text-amber-800 text-center">Generated Horse Names</h2>
-                  <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
-                    {generatedNames.map((nameObj, index) => (
-                      <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow card-gradient border border-amber-200/50">
-                        <CardHeader className="pb-4 bg-gradient-to-r from-amber-100/50 to-transparent">
-                          <div className="flex justify-between items-start">
-                            <CardTitle className="text-xl text-amber-800">{nameObj.name}</CardTitle>
-                            <div className="flex gap-2">
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => handleCopy(nameObj.name, "Name")}
-                                className="text-amber-600 hover:text-amber-800 hover:bg-amber-100 -mt-2 -mr-2"
-                              >
-                                <Copy className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </div>
-                          <CardDescription>
-                            <span className="font-medium">Meaning: </span>
-                            {nameObj.meaning}
-                          </CardDescription>
-                        </CardHeader>
-                        
-                        {expandedCard === index && (
-                          <CardContent className="text-sm space-y-4 pt-0 bg-white/70">
-                            <div>
-                              <div className="flex items-center mb-1">
-                                <h4 className="font-semibold text-amber-800">Personality Traits</h4>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => handleCopy(nameObj.personality_traits.join(", "), "Personality traits")}
-                                  className="h-6 w-6 p-0 text-amber-600 hover:text-amber-800 hover:bg-amber-100"
-                                >
-                                  <Copy className="h-3 w-3" />
-                                </Button>
-                              </div>
-                              <div className="flex flex-wrap gap-2">
-                                {nameObj.personality_traits.map((trait, i) => (
-                                  <Badge key={i} className="bg-amber-100 text-amber-800 hover:bg-amber-200">
-                                    {trait}
-                                  </Badge>
-                                ))}
-                              </div>
-                            </div>
-                            
-                            <div>
-                              <div className="flex items-center mb-1">
-                                <h4 className="font-semibold text-amber-800">Why It Fits</h4>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => handleCopy(nameObj.why_it_fits, "Why it fits")}
-                                  className="h-6 w-6 p-0 text-amber-600 hover:text-amber-800 hover:bg-amber-100"
-                                >
-                                  <Copy className="h-3 w-3" />
-                                </Button>
-                              </div>
-                              <p className="text-gray-700">{nameObj.why_it_fits}</p>
-                            </div>
-                            
-                            <div>
-                              <div className="flex items-center mb-1">
-                                <h4 className="font-semibold text-amber-800">Name Origin</h4>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => handleCopy(nameObj.name_origin, "Name origin")}
-                                  className="h-6 w-6 p-0 text-amber-600 hover:text-amber-800 hover:bg-amber-100"
-                                >
-                                  <Copy className="h-3 w-3" />
-                                </Button>
-                              </div>
-                              <p className="text-gray-700">{nameObj.name_origin}</p>
-                            </div>
-                          </CardContent>
-                        )}
-                        
-                        <CardFooter className="pt-2 pb-4 bg-white/70 flex justify-between">
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
-                            onClick={() => toggleCardExpansion(index)}
-                            className="text-sm text-amber-600 hover:text-amber-800 hover:bg-amber-100 border-amber-200 flex items-center"
-                          >
-                            <Info className="h-4 w-4 mr-1" />
-                            {expandedCard === index ? "Show less" : "Show details"}
-                          </Button>
-                          
-                          {user && (
-                              <Button 
-                                variant="outline" 
-                                size="sm"
-                                className="text-amber-600 hover:text-amber-800 hover:bg-amber-100 border-amber-200"
-                              >
-                                <Heart className="h-4 w-4 mr-1" />
-                                Favorite
-                              </Button>
-                          )}
-                        </CardFooter>
-                      </Card>
-                    ))}
-                  </div>
+          {/* FAQ Section */}
+          <section className="py-16 bg-white/50">
+            <div className="page-container">
+              <h2 className="text-3xl font-bold text-amber-800 text-center mb-12">Frequently Asked Questions</h2>
+              <div className="max-w-4xl mx-auto">
+                <Accordion type="single" collapsible className="space-y-4">
+                  <AccordionItem value="item-1" className="bg-white/70 rounded-lg">
+                    <AccordionTrigger className="px-4">What makes a good horse name?</AccordionTrigger>
+                    <AccordionContent className="px-4 pb-4">
+                      <p>A good horse name should reflect the horse's breed, color, personality, or purpose. Names that are easy to pronounce, distinctive, and meaningful tend to work best. For racehorses, you might want something memorable that sounds good when announced, while show horses often benefit from elegant or impressive names.</p>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-2" className="bg-white/70 rounded-lg">
+                    <AccordionTrigger className="px-4">Are there different naming conventions for different horse disciplines?</AccordionTrigger>
+                    <AccordionContent className="px-4 pb-4">
+                      <p>Yes! Racehorses often have creative, catchy names that stand out when announced (like "Secretariat" or "American Pharoah"). Show horses frequently have elegant, prestigious names (like "Sapphire" or "Authentic"). Working and pleasure horses often have simpler, more casual "barn names" (like "Buddy" or "Star"). Competition horses in disciplines like dressage might have names reflecting their European heritage.</p>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-3" className="bg-white/70 rounded-lg">
+                    <AccordionTrigger className="px-4">What are the rules for registering horse names?</AccordionTrigger>
+                    <AccordionContent className="px-4 pb-4">
+                      <p>Each breed registry has different rules. For Thoroughbreds, names can't exceed 18 characters, can't be entirely numeric, can't use famous names, and must be approved by The Jockey Club. Quarter Horses can't have names exceeding 20 characters and can't duplicate names. Many registries require that names include part of the sire or dam's name, especially for warmbloods and some Arabian registries.</p>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-4" className="bg-white/70 rounded-lg">
+                    <AccordionTrigger className="px-4">Should my horse have both a registered name and a barn name?</AccordionTrigger>
+                    <AccordionContent className="px-4 pb-4">
+                      <p>Many horses do have both. The registered name appears on official paperwork and is used for competitions or breeding records (like "Midnight Symphony"), while the barn name is shorter and used daily (like "Midnight" or "Symphony"). This is especially common with registered show horses and racehorses, as their official names can be quite elaborate.</p>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+            </div>
+          </section>
+
+          {/* How to Use Section */}
+          <section className="py-16 bg-gradient-to-b from-amber-50 to-white">
+            <div className="page-container">
+              <div className="max-w-4xl mx-auto space-y-12">
+                <div className="text-center">
+                  <h2 className="text-3xl font-bold text-amber-800 mb-4">How to Use the Horse Name Generator</h2>
+                  <p className="text-lg text-amber-600">Follow these simple steps to find the perfect name for your horse</p>
                 </div>
-              )}
 
-              {/* Empty State */}
-              {generatedNames.length === 0 && !isGenerating && (
-                <div className="glass-amber p-12 text-center rounded-xl bg-white/40 backdrop-blur-sm border border-amber-100">
-                  <div className="flex justify-center mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="size-12 text-amber-600 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M17 19h1c1.1 0 2 .9 2 2H2c0-1.1.9-2 2-2h1" />
-                      <path d="M2 19V7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8" />
-                      <path d="m11 15-1-1 2-2-2-2 1-1 3 3-3 3Z" />
-                    </svg>
-                  </div>
-                  <p className="text-amber-700 mb-4">
-                    Fill in the form to generate the perfect name for your horse
-                  </p>
-                  <Button
-                    onClick={handleSubmit}
-                    variant="outline"
-                    className="border-amber-400 text-amber-700 hover:bg-amber-200"
-                  >
-                    <Heart className="mr-2 h-4 w-4" />
-                    Generate Names
-                  </Button>
+                <div className="grid gap-8 md:grid-cols-2">
+                  <Card className="bg-white/70">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <span className="size-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center">1</span>
+                        Select Horse Type
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p>Choose what type of horse you have - racehorse, show horse, pleasure horse, etc. - as this will influence the style of names generated.</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-white/70">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <span className="size-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center">2</span>
+                        Describe Your Horse
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p>Tell us about your horse's breed, coloration, personality traits, and any special characteristics that make them unique.</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-white/70">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <span className="size-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center">3</span>
+                        Generate Names
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p>Click generate and let our AI create personalized name suggestions for your equine companion.</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-white/70">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <span className="size-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center">4</span>
+                        Explore Details
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p>Click "Show details" to learn more about each name's meaning, origin, and why it might be perfect for your horse.</p>
+                    </CardContent>
+                  </Card>
                 </div>
-              )}
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ Section */}
-        <section className="py-16 bg-white/50">
-          <div className="page-container">
-            <h2 className="text-3xl font-bold text-amber-800 text-center mb-12">Frequently Asked Questions</h2>
-            <div className="max-w-4xl mx-auto">
-              <Accordion type="single" collapsible className="space-y-4">
-                <AccordionItem value="item-1" className="bg-white/70 rounded-lg">
-                  <AccordionTrigger className="px-4">What makes a good horse name?</AccordionTrigger>
-                  <AccordionContent className="px-4 pb-4">
-                    <p>A good horse name should reflect the horse's breed, color, personality, or purpose. Names that are easy to pronounce, distinctive, and meaningful tend to work best. For racehorses, you might want something memorable that sounds good when announced, while show horses often benefit from elegant or impressive names.</p>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-2" className="bg-white/70 rounded-lg">
-                  <AccordionTrigger className="px-4">Are there different naming conventions for different horse disciplines?</AccordionTrigger>
-                  <AccordionContent className="px-4 pb-4">
-                    <p>Yes! Racehorses often have creative, catchy names that stand out when announced (like "Secretariat" or "American Pharoah"). Show horses frequently have elegant, prestigious names (like "Sapphire" or "Authentic"). Working and pleasure horses often have simpler, more casual "barn names" (like "Buddy" or "Star"). Competition horses in disciplines like dressage might have names reflecting their European heritage.</p>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-3" className="bg-white/70 rounded-lg">
-                  <AccordionTrigger className="px-4">What are the rules for registering horse names?</AccordionTrigger>
-                  <AccordionContent className="px-4 pb-4">
-                    <p>Each breed registry has different rules. For Thoroughbreds, names can't exceed 18 characters, can't be entirely numeric, can't use famous names, and must be approved by The Jockey Club. Quarter Horses can't have names exceeding 20 characters and can't duplicate names. Many registries require that names include part of the sire or dam's name, especially for warmbloods and some Arabian registries.</p>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-4" className="bg-white/70 rounded-lg">
-                  <AccordionTrigger className="px-4">Should my horse have both a registered name and a barn name?</AccordionTrigger>
-                  <AccordionContent className="px-4 pb-4">
-                    <p>Many horses do have both. The registered name appears on official paperwork and is used for competitions or breeding records (like "Midnight Symphony"), while the barn name is shorter and used daily (like "Midnight" or "Symphony"). This is especially common with registered show horses and racehorses, as their official names can be quite elaborate.</p>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </div>
-          </div>
-        </section>
-
-        {/* How to Use Section */}
-        <section className="py-16 bg-gradient-to-b from-amber-50 to-white">
-          <div className="page-container">
-            <div className="max-w-4xl mx-auto space-y-12">
-              <div className="text-center">
-                <h2 className="text-3xl font-bold text-amber-800 mb-4">How to Use the Horse Name Generator</h2>
-                <p className="text-lg text-amber-600">Follow these simple steps to find the perfect name for your horse</p>
-              </div>
-
-              <div className="grid gap-8 md:grid-cols-2">
-                <Card className="bg-white/70">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <span className="size-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center">1</span>
-                      Select Horse Type
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p>Choose what type of horse you have - racehorse, show horse, pleasure horse, etc. - as this will influence the style of names generated.</p>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-white/70">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <span className="size-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center">2</span>
-                      Describe Your Horse
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p>Tell us about your horse's breed, coloration, personality traits, and any special characteristics that make them unique.</p>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-white/70">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <span className="size-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center">3</span>
-                      Generate Names
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p>Click generate and let our AI create personalized name suggestions for your equine companion.</p>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-white/70">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <span className="size-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center">4</span>
-                      Explore Details
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p>Click "Show details" to learn more about each name's meaning, origin, and why it might be perfect for your horse.</p>
-                  </CardContent>
-                </Card>
               </div>
             </div>
+          </section>
+
+          {/* Adsterra Native Banner Ad */}
+          <div className="my-8 max-w-4xl mx-auto">
+            <script 
+              async={true} 
+              data-cfasync={"false"} 
+              src="//pl26337987.profitableratecpm.com/132e23d9e3b100b8ba7ad79b8a165533/invoke.js"
+            ></script>
+            <div id="container-132e23d9e3b100b8ba7ad79b8a165533"></div>
           </div>
-        </section>
-      </main>
-      
-      {/* Footer is included via the App component */}
-    </div>
+        </main>
+        
+        {/* Footer is included via the App component */}
+      </div>
     </>
   );
 };

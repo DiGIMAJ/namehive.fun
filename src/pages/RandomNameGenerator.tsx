@@ -540,7 +540,11 @@ You MUST respond with a valid JSON structure containing an array of name objects
 
         {/* Adsterra Native Banner Ad */}
         <div className="my-8 max-w-4xl mx-auto">
-          <script async={true} data-cfasync="false" src="//pl26337987.profitableratecpm.com/132e23d9e3b100b8ba7ad79b8a165533/invoke.js"></script>
+          <script 
+            async={true} 
+            data-cfasync={"false"} 
+            src="//pl26337987.profitableratecpm.com/132e23d9e3b100b8ba7ad79b8a165533/invoke.js"
+          ></script>
           <div id="container-132e23d9e3b100b8ba7ad79b8a165533"></div>
         </div>
         </main>
